@@ -84,3 +84,9 @@ sudo kubectl uncordon $NODE
 ```sh
 sudo kubectl get nodes
 ```
+The result:
+```
+NAME          STATUS   ROLES    AGE    VERSION
+cncf          Ready    master   172m   v1.14.0
+worker-node   Ready    <none>   169m   v1.14.0
+```
