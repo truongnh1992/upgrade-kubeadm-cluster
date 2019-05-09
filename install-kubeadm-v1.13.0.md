@@ -84,13 +84,13 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8
 ```
 
 ### 2.6. Joining worker node to the cluster
-Adding `--node-ip=<Private-WORKERNODE-IP>` to `/etc/systemd/system/kubelet.service.d/10-kubeadm.conf`
+On worker node, adding `--node-ip=<Private-WORKERNODE-IP>` to `/etc/systemd/system/kubelet.service.d/10-kubeadm.conf`
 
 Reloading daemon, restarting kubelet
 ```sh
 sudo systemctl daemon-reload && systemctl restart kubelet
 ```
-
+Join
 ```sh
 sudo kubeadm join <PRIVATE-MASTER-IP>:6443 --token <token> --discovery-token-ca-cert-hash sha256:<hash>
 ```
