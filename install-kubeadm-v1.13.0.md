@@ -71,19 +71,19 @@ kubernetes-cni=0.6.0-00 --allow-unauthenticated
 sudo kubeadm init --apiserver-advertise-address=<PRIVATE-MASTER-IP> --pod-network-cidr=10.244.0.0/16
 ```
 
-### 2.4. Start using your cluster
+### 2.4. Start using cluster
 ```sh
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-### Applying a pods network
+### 2.5. Applying a pods network
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
 ```
 
-### Joining worker node to the cluster
+### 2.6. Joining worker node to the cluster
 ```sh
 sudo kubeadm join <PRIVATE-MASTER-IP>:6443 --token <token> --discovery-token-ca-cert-hash sha256:<hash>
 ```
