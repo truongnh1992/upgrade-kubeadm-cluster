@@ -1,4 +1,4 @@
-Installing kubeadm v1.13.0 K8S cluster
+Installing kubeadm v1.13.0 cluster
 ======================================
 
 ## 1. Preparing Environment
