@@ -33,7 +33,7 @@ netmask 255.255.255.0
 ```
 
 
-### Configuring proxy for apt
+### 1.1. Configuring proxy for apt
 ```sh
 sudo vim /etc/apt/apt.conf
 
@@ -41,7 +41,7 @@ Acquire::http::proxy "http://[Proxy_Server]:[Proxy_Port]/";
 Acquire::HTTP::proxy "http://[Proxy_Server]:[Proxy_Port]/";
 ```
 
-### Configuring proxy for docker
+### 1.2. Configuring proxy for docker
 ```sh
 sudo mkdir -p /etc/systemd/system/docker.service.d
 sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf
@@ -52,7 +52,7 @@ Environment="HTTP_PROXY=http://[Proxy_Server]:[Proxy_Port]/"
 
 ## 2. Installing and deploying
 
-### Adding kubernetes repo
+### 2.1. Adding kubernetes repo
 ```sh
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" >> ~/kubernetes.list
@@ -60,15 +60,22 @@ sudo mv ~/kubernetes.list /etc/apt/sources.list.d
 sudo apt-get update
 ```
 
-### Installing docker kubelet kubeadm kubectl kubernetes-cni for each node
+### 2.2. Installing docker kubelet kubeadm kubectl kubernetes-cni for each node
 ```sh
 sudo apt-get install -qy docker.io kubelet=1.13.0-00 kubectl=1.13.0-00 kubeadm=1.13.0-00 \
 kubernetes-cni=0.6.0-00 --allow-unauthenticated
 ```
 
-### Deploying Master node (In case of using flannel overlay network)
+### 2.3. Deploying Master node (In case of using flannel overlay network)
 ```sh
 sudo kubeadm init --apiserver-advertise-address=<PRIVATE-MASTER-IP> --pod-network-cidr=10.244.0.0/16
+```
+
+### 2.4. Start using your cluster
+```sh
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
 ### Applying a pods network
