@@ -4,7 +4,16 @@
 1. Follow the tutorial guide at: https://vietkubers.github.io/2019-01-31-ha-cluster-with-kubeadm.html
 2. The result:
 
-![nodes](https://vietkubers.github.io/static/img/multi-master-ha/nodess.PNG)
+```sh
+master1@k8s-master1:~$ sudo kubectl get node -o wide
+NAME          STATUS   ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+k8s-master1   Ready    master   25m   v1.13.0   10.164.178.161   <none>        Ubuntu 16.04.6 LTS   4.4.0-145-generic   docker://18.9.2
+k8s-master2   Ready    master   19m   v1.13.0   10.164.178.162   <none>        Ubuntu 16.04.6 LTS   4.4.0-145-generic   docker://18.9.2
+k8s-master3   Ready    master   18m   v1.13.0   10.164.178.163   <none>        Ubuntu 16.04.6 LTS   4.4.0-145-generic   docker://18.9.2
+k8s-worker1   Ready    <none>   12m   v1.13.0   10.164.178.233   <none>        Ubuntu 16.04.6 LTS   4.4.0-145-generic   docker://18.9.2
+k8s-worker2   Ready    <none>   12m   v1.13.0   10.164.178.234   <none>        Ubuntu 16.04.6 LTS   4.4.0-145-generic   docker://18.9.2
+k8s-worker3   Ready    <none>   11m   v1.13.0   10.164.178.235   <none>        Ubuntu 16.04.6 LTS   4.4.0-145-generic   docker://18.9.2
+```
 
 ### Upgrading the first control plane node (master 1)
 1. Find the version to upgrade to
@@ -30,6 +39,66 @@ sudo kubeadm version
 ```sh
 kubectl edit configmap -n kube-system kubeadm-config
 ```
+<details>
+  <summary>yaml file</summary>
+  
+```yaml
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+data:
+  ClusterConfiguration: |
+    apiServer:
+      certSANs:
+      - 10.164.178.238
+      extraArgs:
+        authorization-mode: Node,RBAC
+      timeoutForControlPlane: 4m0s
+    apiVersion: kubeadm.k8s.io/v1beta1
+    certificatesDir: /etc/kubernetes/pki
+    clusterName: kubernetes
+    controlPlaneEndpoint: 10.164.178.238:6443
+    controllerManager: {}
+    dns:
+      type: CoreDNS
+    etcd:
+      local:
+        dataDir: /var/lib/etcd
+    imageRepository: k8s.gcr.io
+    kind: ClusterConfiguration
+    kubernetesVersion: v1.13.0
+    networking:
+      dnsDomain: cluster.local
+      podSubnet: ""
+      serviceSubnet: 10.96.0.0/12
+    scheduler: {}
+  ClusterStatus: |
+    apiEndpoints:
+      k8s-master1:
+        advertiseAddress: 10.164.178.161
+        bindPort: 6443
+      k8s-master2:
+        advertiseAddress: 10.164.178.162
+        bindPort: 6443
+      k8s-master3:
+        advertiseAddress: 10.164.178.163
+        bindPort: 6443
+    apiVersion: kubeadm.k8s.io/v1beta1
+    kind: ClusterStatus
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2019-05-16T07:12:00Z"
+  name: kubeadm-config
+  namespace: kube-system
+  resourceVersion: "1059"
+  selfLink: /api/v1/namespaces/kube-system/configmaps/kubeadm-config
+  uid: e613aec2-77a9-11e9-8d75-0800270fde1d
+
+```
+</details>
+
 5. Remove the `etcd` section completely
 
 6. Start the upgrade
