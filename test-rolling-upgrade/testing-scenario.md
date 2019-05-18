@@ -56,6 +56,7 @@ do
     curl http://localhost:8888 &>> result.txt
 done
 ```
+![check-downtime](/test-rolling-upgrade/check_time.PNG)
 
 ## Upgrading kubeadm HA cluster
 
@@ -331,3 +332,6 @@ sudo apt-get install kubeadm=1.13.5-00
 sudo apt-mark hold kubeadm
 ```
 After that, the pod **nht-rc-j9nt4** restart, but the connection is still keeping.
+![downtime](/test-rolling-upgrade/downtime.PNG)
+
+The [result.txt](/test-rolling-upgrade/result.txt) to make sure that the connection to the pod **nht-rc-j9nt4** is still keeping.
