@@ -319,3 +319,15 @@ Static pod: kube-scheduler-k8s-master3 hash: 15c129447b0aa0f760fe2d7ba217ecd4
 [upgrade] The control plane instance for this node was successfully updated!
 ```
 </details>
+
+#### Upgrading worker nodes
+Upgrade kubeadm on all worker nodes:
+
+On worker 1:
+```sh
+sudo apt-mark unhold kubeadm
+sudo apt update && sudo apt upgrade
+sudo apt-get install kubeadm=1.13.5-00
+sudo apt-mark hold kubeadm
+```
+After that, the pod **nht-rc-j9nt4** restart, but the connection is still keeping.
