@@ -1,6 +1,6 @@
 ## Run a Replicated Stateful Application
 
-#### Create a PersistentVolume referencing a disk in your environment 
+### Create a PersistentVolume referencing a disk in your environment 
 Create `/data` directories on all of worker nodes
 ```sh
 worker@k8s-worker:~$ sudo mkdir /data
@@ -8,7 +8,7 @@ worker@k8s-worker:~$ sudo mkdir /data
 ```sh
 sudo kubectl apply -f ../yaml-files/mysql-pv.yaml
 ```
-#### Deloy application
+### Deloy application
 
 ```sh
 sudo kubectl apply -f ../yaml-files/mysql-configmap.yaml
@@ -16,7 +16,7 @@ sudo kubectl apply -f ../yaml-files/mysql-services.yaml
 sudo kubectl apply -f ../yaml-files/mysql-statefulset.yaml
 ```
 
-#### The result
+### The result
 **master1@k8s-master1:~$ sudo kubectl get all**
 ```sh
 NAME          READY   STATUS    RESTARTS   AGE
