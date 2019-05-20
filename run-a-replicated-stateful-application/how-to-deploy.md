@@ -17,7 +17,7 @@ sudo kubectl apply -f ../yaml-files/mysql-statefulset.yaml
 ```
 
 ### The result
-**master1@k8s-master1:~$ sudo kubectl get all**
+**master1@k8s-master1:~$** `sudo kubectl get all`
 ```sh
 NAME          READY   STATUS    RESTARTS   AGE
 pod/mysql-0   2/2     Running   0          38m
@@ -32,7 +32,7 @@ service/mysql-read   ClusterIP   10.108.95.75   <none>        3306/TCP   38m
 NAME                     READY   AGE
 statefulset.apps/mysql   3/3     38m
 ```
-**master1@k8s-master1:~$ sudo kubectl get pods -o wide**
+**master1@k8s-master1:~$** `sudo kubectl get pods -o wide`
 ```sh
 NAME      READY   STATUS    RESTARTS   AGE   IP          NODE          NOMINATED NODE   READINESS GATES
 mysql-0   2/2     Running   0          38m   10.40.0.1   k8s-worker3   <none>           <none>
