@@ -6,7 +6,7 @@ Create `/data` directories on all of worker nodes
 worker@k8s-worker:~$ sudo mkdir /data
 ```
 ```sh
-sudo kubectl apply -f ../yaml-files/mysql-pv.yaml
+sudo kubectl apply -f ../yaml-files/mysql-pv.yaml --validate=false
 ```
 ### Deloy application
 
