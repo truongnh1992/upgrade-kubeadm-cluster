@@ -337,3 +337,14 @@ sudo systemctl restart kubelet
 ```
 sudo kubectl uncordon $WORKERNODE
 ```
+## Verify the status of cluster
+```
+master1@k8s-master1:~$ sudo kubectl get node
+NAME          STATUS   ROLES    AGE   VERSION
+k8s-master1   Ready    master   21h   v1.14.0
+k8s-master2   Ready    master   21h   v1.14.0
+k8s-master3   Ready    master   21h   v1.14.0
+k8s-worker1   Ready    <none>   20h   v1.14.0
+k8s-worker2   Ready    <none>   20h   v1.14.0
+k8s-worker3   Ready    <none>   20h   v1.14.0
+```
