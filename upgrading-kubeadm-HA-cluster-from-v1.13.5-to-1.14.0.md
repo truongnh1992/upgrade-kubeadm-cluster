@@ -100,7 +100,7 @@ metadata:
 
 5. Remove the `etcd` section completely
 
-6. Upgrade the kubelet and kubectl
+6. Upgrade the `kubelet` and `kubectl`
 ```sh
 sudo apt-mark unhold kubelet
 sudo apt-get install kubelet=1.14.0-00 kubectl=1.14.0-00
@@ -199,7 +199,7 @@ sudo apt update
 sudo apt-cache policy kubeadm
 ```
 
-2. Upgrade kubeadm
+2. Upgrade `kubeadm`
 ```sh
 sudo apt-mark unhold kubeadm
 sudo apt update && sudo apt upgrade
@@ -212,7 +212,7 @@ sudo apt-mark hold kubeadm
 sudo kubeadm version
 ```
 
-4. Upgrade the kubelet and kubectl
+4. Upgrade the `kubelet` and `kubectl`
 ```sh
 sudo apt-mark unhold kubelet
 sudo apt-get install kubelet=1.14.0-00 kubectl=1.14.0-00
@@ -221,7 +221,7 @@ sudo systemctl restart kubelet
 
 5. Start the upgrade
 ```sh
-sudo kubeadm upgrade node experimental-control-plane
+master2@k8s-master2:~$ sudo kubeadm upgrade node experimental-control-plane
 ```
 <details>
   <summary>The result:</summary>
@@ -268,3 +268,72 @@ Static pod: kube-scheduler-k8s-master2 hash: 58272442e226c838b193bbba4c44091e
 [upgrade] The control plane instance for this node was successfully updated!
 ```
 </details>
+
+```sh
+master3@k8s-master3:~$ sudo kubeadm upgrade node experimental-control-plane
+```
+<details>
+  <summary>The result:</summary>
+  
+```
+[upgrade] Reading configuration from the cluster...
+[upgrade] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'
+[upgrade] Upgrading your Static Pod-hosted control plane instance to version "v1.14.0"...
+Static pod: kube-apiserver-k8s-master3 hash: 556e7d43da7a389c6b0b116ae5a46d97
+Static pod: kube-controller-manager-k8s-master3 hash: 0a9f25af4e4ad5e5427feb8295fc055a
+Static pod: kube-scheduler-k8s-master3 hash: 8cea5badbe1b177ab58353a73cdedd01
+[upgrade/etcd] Upgrading to TLS for etcd
+[upgrade/staticpods] Writing new Static Pod manifests to "/etc/kubernetes/tmp/kubeadm-upgraded-manifests859456185"
+[upgrade/staticpods] Moved new manifest to "/etc/kubernetes/manifests/kube-apiserver.yaml" and backed up old manifest to "/etc/kubernetes/tmp/kubeadm-backup-manifests-2019-05-21-23-48-13/kube-apiserver.yaml"
+[upgrade/staticpods] Waiting for the kubelet to restart the component
+[upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)
+Static pod: kube-apiserver-k8s-master3 hash: 556e7d43da7a389c6b0b116ae5a46d97
+Static pod: kube-apiserver-k8s-master3 hash: 1a94c94ecfa9f698cfc902fc37c15be9
+[apiclient] Found 3 Pods for label selector component=kube-apiserver
+[upgrade/staticpods] Component "kube-apiserver" upgraded successfully!
+[upgrade/staticpods] Moved new manifest to "/etc/kubernetes/manifests/kube-controller-manager.yaml" and backed up old manifest to "/etc/kubernetes/tmp/kubeadm-backup-manifests-2019-05-21-23-48-13/kube-controller-manager.yaml"
+[upgrade/staticpods] Waiting for the kubelet to restart the component
+[upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)
+Static pod: kube-controller-manager-k8s-master3 hash: 0a9f25af4e4ad5e5427feb8295fc055a
+Static pod: kube-controller-manager-k8s-master3 hash: e45f10af1ae684722cbd74cb11807900
+[apiclient] Found 3 Pods for label selector component=kube-controller-manager
+[upgrade/staticpods] Component "kube-controller-manager" upgraded successfully!
+[upgrade/staticpods] Moved new manifest to "/etc/kubernetes/manifests/kube-scheduler.yaml" and backed up old manifest to "/etc/kubernetes/tmp/kubeadm-backup-manifests-2019-05-21-23-48-13/kube-scheduler.yaml"
+[upgrade/staticpods] Waiting for the kubelet to restart the component
+[upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)
+Static pod: kube-scheduler-k8s-master3 hash: 8cea5badbe1b177ab58353a73cdedd01
+Static pod: kube-scheduler-k8s-master3 hash: 58272442e226c838b193bbba4c44091e
+[apiclient] Found 3 Pods for label selector component=kube-scheduler
+[upgrade/staticpods] Component "kube-scheduler" upgraded successfully!
+[upgrade] The control plane instance for this node was successfully updated!
+```
+</details>
+
+### Upgrading worker nodes (worker 1, worker 2 and worker 3)
+
+1. Upgrade `kubeadm` on all worker nodes
+```sh
+sudo apt-mark unhold kubeadm
+sudo apt update && sudo apt upgrade
+sudo apt-get install kubeadm=1.14.0-00
+sudo apt-mark hold kubeadm
+```
+
+2. Cordon the worker node, on the **Master node**, run:
+```sh
+sudo kubectl drain $WORKERNODE --ignore-daemonsets
+```
+3. Upgrade the `kubelet` config on **worker nodes**
+```sh
+sudo kubeadm upgrade node config --kubelet-version v1.14.0
+```
+4. Upgrade `kubelet` and `kubectl`
+```sh
+sudo apt update && sudo apt upgrade
+sudo apt-get install kubelet=1.14.0-00 kubectl=1.14.0-00
+sudo systemctl restart kubelet
+```
+5. Uncordon the worker nodes, bring the node back online by marking it scheduable
+```
+sudo kubectl uncordon $WORKERNODE
+```
