@@ -1,0 +1,39 @@
+[upgrade] Reading configuration from the cluster...
+[upgrade] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'
+[upgrade] Upgrading your Static Pod-hosted control plane instance to version "v1.14.0"...
+Static pod: kube-apiserver-k8s-master2 hash: ba03afd84d454d318c2cc6e3a6e23f53
+Static pod: kube-controller-manager-k8s-master2 hash: 0a9f25af4e4ad5e5427feb8295fc055a
+Static pod: kube-scheduler-k8s-master2 hash: 8cea5badbe1b177ab58353a73cdedd01
+[upgrade/etcd] Upgrading to TLS for etcd
+Static pod: etcd-k8s-master2 hash: d990ad5b88743835159168644453f90b
+[upgrade/staticpods] Moved new manifest to "/etc/kubernetes/manifests/etcd.yaml" and backed up old manifest to "/etc/kubernetes/tmp/kubeadm-backup-manifests-2019-05-21-23-45-09/etcd.yaml"
+[upgrade/staticpods] Waiting for the kubelet to restart the component
+[upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)
+Static pod: etcd-k8s-master2 hash: d990ad5b88743835159168644453f90b
+Static pod: etcd-k8s-master2 hash: e56ee6ac7c0de512a17ef30c3a44e01c
+[apiclient] Found 3 Pods for label selector component=etcd
+[upgrade/staticpods] Component "etcd" upgraded successfully!
+[upgrade/etcd] Waiting for etcd to become available
+[upgrade/staticpods] Writing new Static Pod manifests to "/etc/kubernetes/tmp/kubeadm-upgraded-manifests998233672"
+[upgrade/staticpods] Moved new manifest to "/etc/kubernetes/manifests/kube-apiserver.yaml" and backed up old manifest to "/etc/kubernetes/tmp/kubeadm-backup-manifests-2019-05-21-23-45-09/kube-apiserver.yaml"
+[upgrade/staticpods] Waiting for the kubelet to restart the component
+[upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)
+Static pod: kube-apiserver-k8s-master2 hash: ba03afd84d454d318c2cc6e3a6e23f53
+Static pod: kube-apiserver-k8s-master2 hash: 94e207e0d84e092ae98dc64af5b870ba
+[apiclient] Found 3 Pods for label selector component=kube-apiserver
+[upgrade/staticpods] Component "kube-apiserver" upgraded successfully!
+[upgrade/staticpods] Moved new manifest to "/etc/kubernetes/manifests/kube-controller-manager.yaml" and backed up old manifest to "/etc/kubernetes/tmp/kubeadm-backup-manifests-2019-05-21-23-45-09/kube-controller-manager.yaml"
+[upgrade/staticpods] Waiting for the kubelet to restart the component
+[upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)
+Static pod: kube-controller-manager-k8s-master2 hash: 0a9f25af4e4ad5e5427feb8295fc055a
+Static pod: kube-controller-manager-k8s-master2 hash: e45f10af1ae684722cbd74cb11807900
+[apiclient] Found 3 Pods for label selector component=kube-controller-manager
+[upgrade/staticpods] Component "kube-controller-manager" upgraded successfully!
+[upgrade/staticpods] Moved new manifest to "/etc/kubernetes/manifests/kube-scheduler.yaml" and backed up old manifest to "/etc/kubernetes/tmp/kubeadm-backup-manifests-2019-05-21-23-45-09/kube-scheduler.yaml"
+[upgrade/staticpods] Waiting for the kubelet to restart the component
+[upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)
+Static pod: kube-scheduler-k8s-master2 hash: 8cea5badbe1b177ab58353a73cdedd01
+Static pod: kube-scheduler-k8s-master2 hash: 58272442e226c838b193bbba4c44091e
+[apiclient] Found 3 Pods for label selector component=kube-scheduler
+[upgrade/staticpods] Component "kube-scheduler" upgraded successfully!
+[upgrade] The control plane instance for this node was successfully updated!
