@@ -4,7 +4,7 @@
 1. Follow the tutorial guide at: https://vietkubers.github.io/2019-01-31-ha-cluster-with-kubeadm.html
 2. The result:
 
-```sh
+```console
 master1@k8s-master1:~$ sudo kubectl get node -o wide
 NAME          STATUS   ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
 k8s-master1   Ready    master   20h   v1.13.5   10.164.178.161   <none>        Ubuntu 16.04.6 LTS   4.4.0-145-generic   docker://18.9.2
@@ -17,13 +17,13 @@ k8s-worker3   Ready    <none>   19h   v1.13.5   10.164.178.235   <none>        U
 
 ### Upgrading the first control plane node (master 1)
 1. Find the version to upgrade to
-```sh
+```console
 sudo apt update
 sudo apt-cache policy kubeadm
 ```
 
 2. Upgrade the control plane (master) node
-```sh
+```console
 sudo apt-mark unhold kubeadm
 sudo apt update && sudo apt upgrade
 sudo apt-get install kubeadm=1.14.0-00
@@ -31,12 +31,12 @@ sudo apt-mark hold kubeadm
 ```
 
 3. Verify that the download works and has the expected version
-```sh
+```console
 sudo kubeadm version
 ```
 
 4. Modify `configmap/kubeadm-config` for this control plane node
-```sh
+```console
 kubectl edit configmap -n kube-system kubeadm-config
 ```
 <details>
@@ -101,14 +101,14 @@ metadata:
 5. Remove the `etcd` section completely
 
 6. Upgrade the `kubelet` and `kubectl`
-```sh
+```console
 sudo apt-mark unhold kubelet
 sudo apt-get install kubelet=1.14.0-00 kubectl=1.14.0-00
 sudo systemctl restart kubelet
 ```
 
 7. Start the upgrade
-```sh
+```console
 sudo kubeadm upgrade apply v1.14.0
 ```
 
@@ -194,13 +194,13 @@ Static pod: kube-scheduler-k8s-master1 hash: 99889e63c907d2d88bde0d0ad2e0df05
 ### Upgrading additional control plane nodes (Master 2 and Master 3)
 
 1. Find the version to upgrade to
-```sh
+```console
 sudo apt update
 sudo apt-cache policy kubeadm
 ```
 
 2. Upgrade `kubeadm`
-```sh
+```console
 sudo apt-mark unhold kubeadm
 sudo apt update && sudo apt upgrade
 sudo apt-get install kubeadm=1.14.0-00
@@ -208,19 +208,19 @@ sudo apt-mark hold kubeadm
 ```
 
 3. Verify that the download works and has the expected version
-```sh
+```console
 sudo kubeadm version
 ```
 
 4. Upgrade the `kubelet` and `kubectl`
-```sh
+```console
 sudo apt-mark unhold kubelet
 sudo apt-get install kubelet=1.14.0-00 kubectl=1.14.0-00
 sudo systemctl restart kubelet
 ```
 
 5. Start the upgrade
-```sh
+```console
 master2@k8s-master2:~$ sudo kubeadm upgrade node experimental-control-plane
 ```
 <details>
@@ -269,7 +269,7 @@ Static pod: kube-scheduler-k8s-master2 hash: 58272442e226c838b193bbba4c44091e
 ```
 </details>
 
-```sh
+```console
 master3@k8s-master3:~$ sudo kubeadm upgrade node experimental-control-plane
 ```
 <details>
@@ -312,7 +312,7 @@ Static pod: kube-scheduler-k8s-master3 hash: 58272442e226c838b193bbba4c44091e
 ### Upgrading worker nodes (worker 1, worker 2 and worker 3)
 
 1. Upgrade `kubeadm` on all worker nodes
-```sh
+```console
 sudo apt-mark unhold kubeadm
 sudo apt update && sudo apt upgrade
 sudo apt-get install kubeadm=1.14.0-00
@@ -320,25 +320,25 @@ sudo apt-mark hold kubeadm
 ```
 
 2. Cordon the worker node, on the **Master node**, run:
-```sh
+```console
 sudo kubectl drain $WORKERNODE --ignore-daemonsets
 ```
 3. Upgrade the `kubelet` config on **worker nodes**
-```sh
+```console
 sudo kubeadm upgrade node config --kubelet-version v1.14.0
 ```
 4. Upgrade `kubelet` and `kubectl`
-```sh
+```console
 sudo apt update && sudo apt upgrade
 sudo apt-get install kubelet=1.14.0-00 kubectl=1.14.0-00
 sudo systemctl restart kubelet
 ```
 5. Uncordon the worker nodes, bring the node back online by marking it scheduable
-```
+```console
 sudo kubectl uncordon $WORKERNODE
 ```
 ## Verify the status of cluster
-```
+```console
 master1@k8s-master1:~$ sudo kubectl get node
 NAME          STATUS   ROLES    AGE   VERSION
 k8s-master1   Ready    master   21h   v1.14.0
