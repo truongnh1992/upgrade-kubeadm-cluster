@@ -6,14 +6,14 @@ Create `/data` directories on all of worker nodes
 worker@k8s-worker:~$ sudo mkdir /data
 ```
 ```console
-sudo kubectl apply -f ../yaml-files/mysql-pv.yaml --validate=false
+master@k8s-master:~$ sudo kubectl apply -f ../yaml-files/mysql-pv.yaml --validate=false
 ```
 ### Deloy application
 
 ```console
-sudo kubectl apply -f ../yaml-files/mysql-configmap.yaml
-sudo kubectl apply -f ../yaml-files/mysql-services.yaml
-sudo kubectl apply -f ../yaml-files/mysql-statefulset.yaml
+master@k8s-master:~$ sudo kubectl apply -f ../yaml-files/mysql-configmap.yaml
+master@k8s-master:~$ sudo kubectl apply -f ../yaml-files/mysql-services.yaml
+master@k8s-master:~$ sudo kubectl apply -f ../yaml-files/mysql-statefulset.yaml
 ```
 
 ### The result
