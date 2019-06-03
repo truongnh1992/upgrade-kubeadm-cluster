@@ -2,15 +2,15 @@
 
 ### Create a PersistentVolume referencing a disk in your environment 
 Create `/data` directories on all of worker nodes
-```sh
+```console
 worker@k8s-worker:~$ sudo mkdir /data
 ```
-```sh
+```console
 sudo kubectl apply -f ../yaml-files/mysql-pv.yaml --validate=false
 ```
 ### Deloy application
 
-```sh
+```console
 sudo kubectl apply -f ../yaml-files/mysql-configmap.yaml
 sudo kubectl apply -f ../yaml-files/mysql-services.yaml
 sudo kubectl apply -f ../yaml-files/mysql-statefulset.yaml
@@ -18,7 +18,7 @@ sudo kubectl apply -f ../yaml-files/mysql-statefulset.yaml
 
 ### The result
 **master1@k8s-master1:~$** `sudo kubectl get all`
-```sh
+```console
 NAME          READY   STATUS    RESTARTS   AGE
 pod/mysql-0   2/2     Running   0          38m
 pod/mysql-1   2/2     Running   0          37m
@@ -33,7 +33,7 @@ NAME                     READY   AGE
 statefulset.apps/mysql   3/3     38m
 ```
 **master1@k8s-master1:~$** `sudo kubectl get pods -o wide`
-```sh
+```console
 NAME      READY   STATUS    RESTARTS   AGE   IP          NODE          NOMINATED NODE   READINESS GATES
 mysql-0   2/2     Running   0          38m   10.40.0.1   k8s-worker3   <none>           <none>
 mysql-1   2/2     Running   0          38m   10.39.0.1   k8s-worker2   <none>           <none>
