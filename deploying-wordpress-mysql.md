@@ -2,14 +2,15 @@
 
 ## Installing and configuring NFS server
 
-Installing and configuring a NFS server on Linux machine.
+Installing NFS server on Linux machine
 
 ```console
-sudo apt-get install nfs-kernel-server
+sudo apt install nfs-kernel-server
 sudo mkdir -p /opt/data
 sudo chmod -R 777 /opt/data
-sudo chown -R  nobody:nogroup /opt/data
+sudo chown -R nobody:nogroup /opt/data
 ```
+Configuring NFS server
 ```console
 sudo vim /etc/exports
 /opt/data *(rw,sync,no_root_squash,fsid=0,no_subtree_check)
@@ -17,6 +18,7 @@ sudo vim /etc/exports
 ```console
 sudo exportfs -a 
 sudo systemctl enable rpcbind
+sudo /lib/systemd/systemd-sysv-install enable rpcbind
 sudo systemctl enable nfs-server
 sudo systemctl start rpcbind
 sudo systemctl start nfs-server
@@ -33,6 +35,7 @@ In each worker node, running the below commands.
 sudo apt install nfs-common nfs-kernel-server
 sudo systemctl start rpcbind nfs-mountd
 sudo systemctl enable rpcbind nfs-mountd
+sudo /lib/systemd/systemd-sysv-install enable rpcbind
 ```
 ```console
 sudo vim /etc/fstab
